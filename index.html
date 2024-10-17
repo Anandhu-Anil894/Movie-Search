@@ -38,15 +38,14 @@
     </div>
   </div>
 
-  </div>
-  </div>
+
 
 </body>
 <script>
   function search() {
     var movieName = document.getElementById("mser").value;
 
-    fetch(`https:/www.omdbapi.com/?t=${movieName}&apikey=6e82b98e`)
+    fetch(`https://www.omdbapi.com/?t=${movieName}&apikey=6e82b98e`)
       .then(response => response.json())
       .then(data => displaymovie(data))
       .catch(error => alert('Error fetching details:', error));
