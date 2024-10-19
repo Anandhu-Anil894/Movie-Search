@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie search</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+  <title>Movie Search</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <style>
+    body{
+      background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20231231/pngtree-abstract-background-with-watercolor-texture-in-shades-of-blue-and-orange-image_13899501.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
 </head>
-<style>
-
-</style>
-
 <body>
-  <div class="container-sm text-center border rounded shadow-xxl mt-5 bg-secondary">
+  <div class="container-sm text-center  mt-5 ">
     <h1 class="text-center fs-italic">Movie Search</h1>
     <div class="row d-flex ">
       <div class="col-4"></div>
       <div class="col-4 mt-4">
 
-        <input type="text" id="mser" class="form-control" placeholder="Enter the movie Name" spellcheck="true">
+        <input type="text" id="searchmovie" class="form-control" placeholder="Enter the movie Name" spellcheck="true">
         <button onclick="search()" class="btn btn-success my-3">Search</button>
       </div>
       <div class="col-4"></div>
@@ -38,40 +37,35 @@
     </div>
   </div>
 
+  <script>
+    function search(){
+      let movieName =document.getElementById("searchmovie").value;
 
-
-</body>
-<script>
-  function search() {
-    var movieName = document.getElementById("mser").value;
-
-    fetch(`https://www.omdbapi.com/?t=${movieName}&apikey=6e82b98e`)
+      fetch(`https://www.omdbapi.com/?t=${movieName}&apikey=6e82b98e`)
       .then(response => response.json())
-      .then(data => displaymovie(data))
-      .catch(error => alert('Error fetching details:', error));
-  }
-  function displaymovie(movie) {
-    var display = document.getElementById("display");
-    display.innerHTML = `<div class="card" style="width: 25rem; height:"250px">
-  <img src="${movie.Poster}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${movie.Title}</h5>
-    <p class="card-text"><b>Actors:</b>${movie.Actors}</p>
-    <p class="card-text"><b>Director</b>:${movie.Director}</p>
-    <p class="card-text"><b>Language</b>:${movie.Language}</p>
-    <p class="card-text"><b>Plot</b>:${movie.Plot}</p>
-    <p class="card-text"><b>IMDB Rating</b>:${movie.imdbRating}</p>
-    <p class="card-text"><b>Runtime</b>:${movie.Runtime}</p>
+      .then(data => displayMovie(data))
+      .catch(error => alert(`Error fetching details: ${error}`))
+    }
+    function displayMovie(movie){
+      let display = document.getElementById("display");
+      display.innerHTML = `
+      <div class="card border rounded shadow-xxl border-danger" style="width: 25rem; height:"250px">
+        <center>
+        <img src="${movie.Poster}" class="card-img-top w-50 mt-2" alt="...">
+        </center>
+        <div class="card-body">
+          <h5 class="card-title">${movie.Title}</h5>
+          <p class="card-text"><b>Actors:</b>${movie.Actors}</p>
+          <p class="card-text"><b>Director</b>:${movie.Director}</p>
+          <p class="card-text"><b>Language</b>:${movie.Language}</p>
+          <p class="card-text"><b>Plot</b>:${movie.Plot}</p>
+          <p class="card-text"><b>IMDB Rating</b>:${movie.imdbRating}</p>
+          <p class="card-text"><b>Runtime</b>:${movie.Runtime}</p>
+        </div>
+      </div>`
+    }
 
-
-
-
-
-  </div>
-</div>
-        `;
-
-  }
-</script>
-
+  </script>
+  
+</body>
 </html>
